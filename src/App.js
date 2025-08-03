@@ -1,31 +1,71 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import AdminButton from "./components/AdminButton";
-import Home from "./pages/Home";
-import Videos from "./pages/Videos";
-import Admin from "./pages/Admin";
-import { useState } from "react";
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Videos from './pages/Videos';
+import About from './pages/About';
+import { navbarThemes } from './theme/navbarThemes';
 
-function App() {
-  const [isAdmin, setIsAdmin] = useState(false);
+export default function App() {
+  const [currentPage, setCurrentPage] = useState('home');
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return (
+          <motion.div
+            key="home"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Home setCurrentPage={setCurrentPage} />
+          </motion.div>
+        );
+      case 'videos':
+        return (
+          <motion.div
+            key="videos"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Videos setCurrentPage={setCurrentPage} />
+          </motion.div>
+        );
+      case 'about':
+        return (
+          <motion.div
+            key="about"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <About setCurrentPage={setCurrentPage} />
+          </motion.div>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div dir="rtl" className="bg-gray-50 min-h-screen text-gray-900 font-sans">
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/videos" element={<Videos />} />
-          <Route
-            path="/admin"
-            element={isAdmin ? <Admin /> : <Navigate to="/" replace />}
-          />
-        </Routes>
+    <div className="font-sans antialiased bg-black text-white" dir="rtl">
+      <Navbar
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        navbarColors={navbarThemes[currentPage]}
+      />
 
-        <AdminButton setIsAdmin={setIsAdmin} />
-      </BrowserRouter>
+      <AnimatePresence mode="wait">
+        {renderPage()}
+      </AnimatePresence>
     </div>
-  );
-}
 
-export default App;
+  );
+
+
+}
