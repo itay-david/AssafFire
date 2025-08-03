@@ -73,7 +73,7 @@ export default function Navbar({ currentPage, setCurrentPage, navbarColors }) {
           {/* המבורגר */}
           <motion.button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`md:hidden p-2 rounded-lg bg-gradient-to-r ${background} border ${border} backdrop-blur-sm`}
+            className="md:hidden p-2 rounded-lg bg-gradient-to-r from-amber-400/10 via-white/10 to-purple-600/10 border border-white/20 backdrop-blur-sm"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
