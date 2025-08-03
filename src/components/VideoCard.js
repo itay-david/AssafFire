@@ -1,9 +1,4 @@
-type Props = {
-  title: string;
-  youtubeUrl: string;
-};
-
-export default function VideoCard({ title, youtubeUrl }: Props) {
+export default function VideoCard({ title, youtubeUrl }) {
   const videoId = youtubeUrl.split("v=")[1];
   return (
     <div className="bg-white shadow rounded p-3">
